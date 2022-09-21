@@ -6,6 +6,22 @@ soong_namespace {
 }
 
 cc_prebuilt_library_shared {
+	name: "libaptX_encoder",
+	owner: "samsung",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/lib64/libaptX_encoder.so"],
+		},
+	},
+	compile_multilib: "64",
+	check_elf_files: false,
+	prefer: true,
+}
+
+cc_prebuilt_library_shared {
 	name: "libfastcvopt",
 	owner: "samsung",
 	strip: {
@@ -73,13 +89,22 @@ android_app_import {
 	soc_specific: true,
 }
 
-prebuilt_etc_xml {
-	name: "android.hardware.gnss@2.1-service-qti",
+android_app_import {
+	name: "com.qualcomm.qti.gpudrivers.kona.api30",
 	owner: "samsung",
-	src: "proprietary/vendor/etc/vintf/manifest/android.hardware.gnss@2.1-service-qti.xml",
-	filename_from_src: true,
-	sub_dir: "vintf/manifest",
+	apk: "proprietary/vendor/app/com.qualcomm.qti.gpudrivers.kona.api30/com.qualcomm.qti.gpudrivers.kona.api30.apk",
+	certificate: "platform",
+	dex_preopt: {
+		enabled: false,
+	},
 	soc_specific: true,
+}
+
+dex_import {
+	name: "audiosphere",
+	owner: "samsung",
+	jars: ["proprietary/system_ext/framework/audiosphere.jar"],
+	system_ext_specific: true,
 }
 
 prebuilt_etc_xml {
